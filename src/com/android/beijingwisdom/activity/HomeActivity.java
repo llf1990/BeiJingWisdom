@@ -1,17 +1,38 @@
 package com.android.beijingwisdom.activity;
 
 
-import com.android.beijingwisdom.R;
-
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.view.Window;
 
-public class HomeActivity extends Activity {
+import com.android.beijingwisdom.R;
+import com.android.beijingwisdom.fragment.LeftMenuFragment;
+import com.android.beijingwisdom.fragment.MainMenuFragment;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
+
+
+public class HomeActivity extends  SlidingFragmentActivity{
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_home);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.activity_home_main);
+		
+		//…Ë÷√◊Û≤‡±ﬂ¿∏
+		setBehindContentView(R.layout.activity_home_left);
+		SlidingMenu slidingMenu = getSlidingMenu();//ªÒµ√slidingmenu∂‘œÛ
+		slidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);//…Ë÷√»´∆¡¥•√˛
+		slidingMenu.setBehindOffset(500);//…Ë÷√∆¡ƒª‘§¡Ù200œÒÀÿ
+		initFragment();
 	}
-
+	
+	private void initFragment(){
+		FragmentManager fm = getSupportFragmentManager();//∞Ê±æºÊ»›
+		FragmentTransaction transaction = fm.beginTransaction();
+		transaction.replace(R.id.fl_main, new MainMenuFragment());
+		transaction.replace(R.id.fl_left, new LeftMenuFragment());
+		transaction.commit();
+	}
 }

@@ -4,14 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.android.beijingwisdom.R;
+import com.android.beijingwisdom.utils.SPUtil;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -26,6 +32,8 @@ public class GuideActivtiy extends Activity {
 	private ViewPager vp_guide;
 	private List<ImageView> imagelist;
 	private GuideAdapter adapter;
+	private Button btn_start;
+	private SharedPreferences sp;
 	private LinearLayout ll_container;
 	private int prvPosition = 0;// 当前postion的前一个位置
 	// 引导页图片
@@ -36,10 +44,12 @@ public class GuideActivtiy extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_guide);
-
+		sp = getSharedPreferences("config", MODE_PRIVATE);
 		vp_guide = (ViewPager) findViewById(R.id.vp_guide);
 		ll_container = (LinearLayout) findViewById(R.id.ll_container);
+		btn_start = (Button) findViewById(R.id.btn_start);
 		InitData();
 		adapter = new GuideAdapter();
 		vp_guide.setAdapter(adapter);
@@ -49,15 +59,19 @@ public class GuideActivtiy extends Activity {
 			@Override
 			public void onPageScrolled(int position, float positionOffset,
 					int positionOffsetPixels) {
-
-			}
-
-			@Override
-			public void onPageSelected(int position) {
 				System.out.println(position + ":" + prvPosition);
 				ll_container.getChildAt(position).setEnabled(true);
 				ll_container.getChildAt(prvPosition).setEnabled(false);
 				prvPosition = position;
+			}
+
+			@Override
+			public void onPageSelected(int position) {
+				if(position == imagelist.size() -1 ){
+					btn_start.setVisibility(View.VISIBLE);
+				}else{
+					btn_start.setVisibility(View.INVISIBLE);
+				}
 			}
 
 			@Override
@@ -66,6 +80,16 @@ public class GuideActivtiy extends Activity {
 
 			}
 
+		});
+		btn_start.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				//更新sp,已经不是第一次进入
+				SPUtil.setBoolean(sp, "isFirstEnter", false);
+				Intent intent = new Intent(GuideActivtiy.this,HomeActivity.class);
+				startActivity(intent);
+			}
 		});
 	}
 
