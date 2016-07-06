@@ -3,6 +3,7 @@ package com.android.beijingwisdom.base.imp;
 import android.app.Activity;
 import android.graphics.Color;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.TextView;
 
 import com.android.beijingwisdom.base.BasePager;
@@ -18,11 +19,13 @@ public class Setting_Pager extends BasePager {
 	public void initData() {
 		// TODO Auto-generated method stub
 		TextView view = new TextView(mActivity);
-		view.setText("首页");
+		view.setText("设置");
 		view.setTextColor(Color.RED);
 		view.setGravity(Gravity.CENTER);
 		fl_content.addView(view);
 		
 		tv_title.setText("设置");
+		//设置imagebutton隐藏
+		ib_menu.setVisibility(View.INVISIBLE);
 	}
 }

@@ -18,7 +18,7 @@ public class SmartService_Pager extends BasePager {
 	public void initData() {
 		// TODO Auto-generated method stub
 		TextView view = new TextView(mActivity);
-		view.setText("Ê×Ò³");
+		view.setText("ÖÇ»Û·þÎñ");
 		view.setTextColor(Color.RED);
 		view.setGravity(Gravity.CENTER);
 		fl_content.addView(view);

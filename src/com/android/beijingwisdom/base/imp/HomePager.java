@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.TextView;
 
 import com.android.beijingwisdom.base.BasePager;
@@ -25,5 +26,7 @@ public class HomePager extends BasePager {
 		view.setGravity(Gravity.CENTER);
 		fl_content.addView(view);
 		tv_title.setText("ÖÇ»Û±±¾©");
+		//Òþ²Øbutton
+		ib_menu.setVisibility(View.INVISIBLE);
 	}
 }

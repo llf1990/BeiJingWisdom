@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.android.beijingwisdom.R;
+import com.android.beijingwisdom.activity.HomeActivity;
 import com.android.beijingwisdom.base.BasePager;
 import com.android.beijingwisdom.base.imp.Govaffiairs_Pager;
 import com.android.beijingwisdom.base.imp.HomePager;
 import com.android.beijingwisdom.base.imp.Newscenter_Pager;
 import com.android.beijingwisdom.base.imp.Setting_Pager;
 import com.android.beijingwisdom.base.imp.SmartService_Pager;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -25,6 +27,7 @@ public class MainMenuFragment extends BaseFragment {
 	private ViewPager vp_pages;
 	private List<BasePager> mpagerlist;
 	private RadioGroup rg_guide_title;
+	private BasePager pager;
 	
 	@Override
 	public View initView() {
@@ -52,20 +55,20 @@ public class MainMenuFragment extends BaseFragment {
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				switch (checkedId) {
 				case R.id.rb_tab_main://首页
-					vp_pages.setCurrentItem(0);
+					vp_pages.setCurrentItem(0,false);
 					break;
 
 				case R.id.rb_tab_news://新闻中心
-					vp_pages.setCurrentItem(1);
+					vp_pages.setCurrentItem(1,false);
 					break;
 				case R.id.rb_tab_smartservice://智慧服务
-					vp_pages.setCurrentItem(2);	
+					vp_pages.setCurrentItem(2,false);	
 						break;
 				case R.id.rb_tab_govaffairs://政务
-					vp_pages.setCurrentItem(3);
+					vp_pages.setCurrentItem(3,false);
 					break;
 				case R.id.rb_tab_setting://设置
-					vp_pages.setCurrentItem(4);
+					vp_pages.setCurrentItem(4,false);
 					break;
 					
 				}
@@ -76,10 +79,27 @@ public class MainMenuFragment extends BaseFragment {
 			@Override
 			public void onPageSelected(int position) {
 				//initview默认会加载下一个页面，为节省用户流量当用户点击相应页面在进行加载
-				BasePager pager = mpagerlist.get(position);
+				pager = mpagerlist.get(position);
 				pager.initData();
+				if(position == 0 || position == mpagerlist.size() - 1){
+					//设置禁用侧边栏
+					setSlidingMenuEnable(false);
+				}else{
+					//启用侧边栏
+					setSlidingMenuEnable(true);
+				}
 			}
 			
+			private void setSlidingMenuEnable(boolean enable) {
+				HomeActivity mainUI = (HomeActivity) mActivity;
+				SlidingMenu smenu = mainUI.getSlidingMenu();
+				if(enable){
+					smenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+				}else{
+					smenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+				}
+			}
+
 			@Override
 			public void onPageScrolled(int arg0, float arg1, int arg2) {
 				// TODO Auto-generated method stub
@@ -92,7 +112,10 @@ public class MainMenuFragment extends BaseFragment {
 				
 			}
 		});
+		pager = mpagerlist.get(0);
+		pager.initData();
 	}
+	
 	class PagesAdapter extends PagerAdapter{
 		
 		@Override
