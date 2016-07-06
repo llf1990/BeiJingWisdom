@@ -35,5 +35,5 @@ public abstract class BaseFragment extends Fragment {
 		initData();
 	}
 	public abstract View initView();//必须由子类实现的抽象方法，以返回子类的对象
-	public abstract View initData();//子类初始化数据
+	public abstract void initData();//子类初始化数据
 }
