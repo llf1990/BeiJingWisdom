@@ -144,4 +144,7 @@ public class MainMenuFragment extends BaseFragment {
 			container.removeView((View) object);
 		}
 	}
+	public BasePager getBasePager(int position){
+		return mpagerlist.get(position);
+	}
 }

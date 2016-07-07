@@ -11,20 +11,24 @@ public class NewsMenu {
 	
 	public int retcode;
 	public ArrayList<Integer> extend;	
-	public ArrayList<NewsLeftMenu>code;
+	public ArrayList<NewsLeftMenu>data;
 	
-	class NewsLeftMenu{
+	public class NewsLeftMenu{
 		public int id;
 		public String title;
 		public int type;
 		public ArrayList<NewsClassify> children;
 	}
 	
-	class NewsClassify{
+	public class NewsClassify{
 		public int id;
 		public String title;
 		public int type;
 		public String url;
+		@Override
+		public String toString() {
+			return title+":"+id+":"+url;
+		}
 	}
 	
 }
